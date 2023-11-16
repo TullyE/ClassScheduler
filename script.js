@@ -2,17 +2,12 @@ const addClassButton = document.getElementById("addClassButton")
 
 const pageList = document.getElementById("classList")
 
-let pageElements = document.querySelectorAll(".page_buttons")
-let pages = []
-
-
-
+let classData = []
 
 function createCustomClass(className, classTimes, index) {
     return {
         className: className || "New Class",
         classTimes: classTimes || [],
-        index: index || NaN
     }
 }
 
@@ -25,55 +20,43 @@ if (storedPagesData) {
 }
 
 function createPageButton(pageData) {
-    const newPage = createCustomClass(pageData.className, pageData.classTimes, pageData.index);
-
-    const pageNumber = pages.length;
+    const newPage = createCustomClass(pageData.className, pageData.classTimes);
 
     const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'page-buttons';
-
     const pageSelect = document.createElement('select');
 
     const addButton = document.createElement('button');
-    addButton.style.color = 'black';
     addButton.textContent = newPage.className;
 
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
 
-    newPage.index = pageNumber;
-
     buttonContainer.append(addButton, pageSelect, removeButton);
     pageList.appendChild(buttonContainer);
 
-    pages.push(newPage);
+    classData.push(newPage);
 
     addButton.addEventListener('click', () => {
-        const selectedPageIndex = pages.indexOf(newPage);
+        const selectedPageIndex = classData.indexOf(newPage);
         localStorage.setItem('selectedPage', selectedPageIndex);
-        localStorage.setItem('pages_data', JSON.stringify(pages));
+        localStorage.setItem('pages_data', JSON.stringify(classData));
         window.location.href = 'page.html';
     });
 
     removeButton.addEventListener('click', () => {
+        const pageIndexToRemove = classData.indexOf(newPage);
         pageList.removeChild(buttonContainer);
 
-        const pageIndexToRemove = pages.findIndex(p => p.index === pageNumber);
         if (pageIndexToRemove !== -1) {
-            pages.splice(pageIndexToRemove, 1);
+            classData.splice(pageIndexToRemove, 1);
         }
 
-        localStorage.setItem('pages_data', JSON.stringify(pages));
+        localStorage.setItem('pages_data', JSON.stringify(classData));
     });
 
-    localStorage.setItem('pages_data', JSON.stringify(pages));
+    localStorage.setItem('pages_data', JSON.stringify(classData));
 }
 
 addClassButton.addEventListener('click', () => {
     createPageButton(createCustomClass())
-    localStorage.setItem('pages_data', JSON.stringify(pages));
 });
-
-function parseTimes(timeArray) {
-    //TODO    
-}

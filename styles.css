@@ -1,13 +1,6 @@
-h1 {
-    text-align: center;
-}
-
 button {
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 25px;
     margin: 5px;
-}
-
-#buttonList {
-    text-align: center;
 }

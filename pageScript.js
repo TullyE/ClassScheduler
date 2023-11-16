@@ -36,6 +36,8 @@ function addTime() {
     meetingInfo.append(dayInput, startTimeInput, endTimeInput, addButton, removeButton)
 
     timeDiv.appendChild(meetingInfo)
+    currPage.classTimes.push([[], [], []])
+    console.log(currPage.classTimes)
 }
 
 newTimeButton.addEventListener("click", () => {
