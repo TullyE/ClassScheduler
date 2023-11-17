@@ -4,7 +4,7 @@ const pageList = document.getElementById("classList")
 
 let classData = []
 
-function createCustomClass(className, classTimes, index) {
+function createCustomClass(className, classTimes) {
     return {
         className: className || "New Class",
         classTimes: classTimes || [],
