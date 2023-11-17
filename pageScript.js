@@ -11,9 +11,9 @@ classNameInput.value = currPage.className
 
 function createTime(classDays, classStartTime, classEndTime, id) {
     return {
-        days: classDays || "a",
-        startTime: classStartTime || "b",
-        endTime: classEndTime || "c",
+        days: classDays || "Days",
+        startTime: classStartTime || "Start Time",
+        endTime: classEndTime || "End Time",
         id: id || generateRandomString()
     }
 }
@@ -46,7 +46,7 @@ function addTime(time, divToAdd) {
     // let id_display = document.createElement('p')
     // id_display.innerText = time.id
 
-    dayInput.value = time.id
+    dayInput.value = time.days
     startTimeInput.value = time.startTime
     endTimeInput.value = time.endTime
 
@@ -75,11 +75,28 @@ function addTime(time, divToAdd) {
         let timeobj = createTime()
         addTime(timeobj, divToAdd)
 
-        let indexToRemove = getTargetIndex(time)
-        // console.log(indexToRemove[0])
-        currPage.classTimes[indexToRemove[0]].push(timeobj)
+        let indexToAdd = getTargetIndex(time)
+        currPage.classTimes[indexToAdd[0]].push(timeobj)
         localStorage.setItem('pages_data', JSON.stringify(pages));
 
+    })
+
+    dayInput.addEventListener('input', () => {
+        let index = getTargetIndex(time)
+        currPage.classTimes[index[0]][index[1]].days = dayInput.value
+        localStorage.setItem('pages_data', JSON.stringify(pages));
+    })
+
+    startTimeInput.addEventListener('input', () => {
+        let index = getTargetIndex(time)
+        currPage.classTimes[index[0]][index[1]].startTime = startTimeInput.value
+        localStorage.setItem('pages_data', JSON.stringify(pages));
+    })
+
+    endTimeInput.addEventListener('input', () => {
+        let index = getTargetIndex(time)
+        currPage.classTimes[index[0]][index[1]].endTime = endTimeInput.value
+        localStorage.setItem('pages_data', JSON.stringify(pages));
     })
 
     localStorage.setItem('pages_data', JSON.stringify(pages));
