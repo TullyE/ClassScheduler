@@ -1,3 +1,4 @@
+import { parseDays } from './parseDays.js'
 const classNameInput = document.getElementById("classNameInput")
 const homeButton = document.getElementById("homeButton")
 const currentIndex = JSON.parse(localStorage.getItem('selectedPage'));
@@ -24,6 +25,19 @@ function updateClassName() {
     localStorage.setItem('pages_data', JSON.stringify(pages));
 }
 
+function textInputHandler(index, property, element) {
+    currPage.classTimes[index[0]][index[1]][property] = element.value
+    localStorage.setItem('pages_data', JSON.stringify(pages));
+    switch (property) {
+        case 'days':
+            element.style.color = !parseDays(element.value)[0] ? 'red' : 'black'
+            break;
+
+        default:
+            break;
+    }
+}
+
 homeButton.addEventListener('click', () => {
     window.location.href = "index.html";
 })
@@ -47,8 +61,13 @@ function addTime(time, divToAdd) {
     // id_display.innerText = time.id
 
     dayInput.value = time.days
+    dayInput.style.color = !parseDays(dayInput.value)[0] ? 'red' : 'black'
+
     startTimeInput.value = time.startTime
+    startTimeInput.style.color = 'red'
     endTimeInput.value = time.endTime
+    endTimeInput.style.color = 'red'
+
 
     meetingInfo.append(dayInput, startTimeInput, endTimeInput, addButton, removeButton)
 
@@ -82,21 +101,15 @@ function addTime(time, divToAdd) {
     })
 
     dayInput.addEventListener('input', () => {
-        let index = getTargetIndex(time)
-        currPage.classTimes[index[0]][index[1]].days = dayInput.value
-        localStorage.setItem('pages_data', JSON.stringify(pages));
+        textInputHandler(getTargetIndex(time), 'days', dayInput)
     })
 
     startTimeInput.addEventListener('input', () => {
-        let index = getTargetIndex(time)
-        currPage.classTimes[index[0]][index[1]].startTime = startTimeInput.value
-        localStorage.setItem('pages_data', JSON.stringify(pages));
+        textInputHandler(getTargetIndex(time), 'startTime', startTimeInput)
     })
 
     endTimeInput.addEventListener('input', () => {
-        let index = getTargetIndex(time)
-        currPage.classTimes[index[0]][index[1]].endTime = endTimeInput.value
-        localStorage.setItem('pages_data', JSON.stringify(pages));
+        textInputHandler(getTargetIndex(time), 'endTime', endTimeInput)
     })
 
     localStorage.setItem('pages_data', JSON.stringify(pages));
