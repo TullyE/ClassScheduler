@@ -1,4 +1,6 @@
 import { parseDays } from './parseDays.js'
+import { isValidTimeFormat, secondTimeAfterFirst } from './parseTime.js'
+
 const classNameInput = document.getElementById("classNameInput")
 const homeButton = document.getElementById("homeButton")
 const currentIndex = JSON.parse(localStorage.getItem('selectedPage'));
@@ -28,14 +30,22 @@ function updateClassName() {
 function textInputHandler(index, property, element) {
     currPage.classTimes[index[0]][index[1]][property] = element.value
     localStorage.setItem('pages_data', JSON.stringify(pages));
-    switch (property) {
-        case 'days':
-            element.style.color = !parseDays(element.value)[0] ? 'red' : 'black'
-            break;
+}
 
-        default:
-            break;
+function validateInputs(dayElement, startTimeElement, endTimeElement) {
+    let dayStringIsValid = !(parseDays(dayElement.value)[0] == false)
+    let startTimeIsValid = isValidTimeFormat(startTimeElement.value)
+    let endTimeIsValid = isValidTimeFormat(endTimeElement.value)
+
+    dayElement.style.color = dayStringIsValid ? 'black' : 'red'
+    startTimeElement.style.color = startTimeIsValid ? 'black' : 'red'
+    endTimeElement.style.color = endTimeIsValid ? 'black' : 'red'
+
+    if ((startTimeIsValid && endTimeIsValid) && !secondTimeAfterFirst(startTimeElement.value, endTimeElement.value)) {
+        startTimeElement.style.color = 'red'
+        endTimeElement.style.color = 'red'
     }
+
 }
 
 homeButton.addEventListener('click', () => {
@@ -55,21 +65,21 @@ function addTime(time, divToAdd) {
     addButton.innerText = "Add Time"
     let removeButton = document.createElement('button')
     removeButton.innerText = "Remove Time"
+    let duplicateButton = document.createElement("button")
+    duplicateButton.innerText = "Duplicate"
+
 
 
     // let id_display = document.createElement('p')
     // id_display.innerText = time.id
 
     dayInput.value = time.days
-    dayInput.style.color = !parseDays(dayInput.value)[0] ? 'red' : 'black'
-
     startTimeInput.value = time.startTime
-    startTimeInput.style.color = 'red'
     endTimeInput.value = time.endTime
-    endTimeInput.style.color = 'red'
+    validateInputs(dayInput, startTimeInput, endTimeInput)
 
 
-    meetingInfo.append(dayInput, startTimeInput, endTimeInput, addButton, removeButton)
+    meetingInfo.append(dayInput, startTimeInput, endTimeInput, addButton, removeButton, duplicateButton)
 
     divToAdd.appendChild(meetingInfo)
 
@@ -100,16 +110,29 @@ function addTime(time, divToAdd) {
 
     })
 
+    duplicateButton.addEventListener('click', () => {
+        let allMeetTimes = document.createElement('div')
+        allMeetTimes.classList.add("mystyle");
+        let timeobj = createTime(time.days, time.startTime, time.endTime)
+        addTime(timeobj, allMeetTimes)
+        currPage.classTimes.push([timeobj])
+        localStorage.setItem('pages_data', JSON.stringify(pages));
+        timeOptionsDiv.append(allMeetTimes)
+    })
+
     dayInput.addEventListener('input', () => {
         textInputHandler(getTargetIndex(time), 'days', dayInput)
+        validateInputs(dayInput, startTimeInput, endTimeInput)
     })
 
     startTimeInput.addEventListener('input', () => {
         textInputHandler(getTargetIndex(time), 'startTime', startTimeInput)
+        validateInputs(dayInput, startTimeInput, endTimeInput)
     })
 
     endTimeInput.addEventListener('input', () => {
         textInputHandler(getTargetIndex(time), 'endTime', endTimeInput)
+        validateInputs(dayInput, startTimeInput, endTimeInput)
     })
 
     localStorage.setItem('pages_data', JSON.stringify(pages));
@@ -124,7 +147,6 @@ newTimeButton.addEventListener("click", () => {
     currPage.classTimes.push([timeobj])
     localStorage.setItem('pages_data', JSON.stringify(pages));
     timeOptionsDiv.append(allMeetTimes)
-
 })
 
 currPage.classTimes.forEach(time => {
