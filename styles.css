@@ -5,7 +5,18 @@ button {
     margin: 5px;
 }
 
+select {
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 25px;
+    margin: 5px;
+}
+
 .mystyle {
     margin-bottom: 25px;
     margin-top: 25px;
+}
+
+option {
+    background-color: green;
 }
