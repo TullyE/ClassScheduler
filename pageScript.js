@@ -68,11 +68,6 @@ function addTime(time, divToAdd) {
     let duplicateButton = document.createElement("button")
     duplicateButton.innerText = "Duplicate"
 
-
-
-    // let id_display = document.createElement('p')
-    // id_display.innerText = time.id
-
     dayInput.value = time.days
     startTimeInput.value = time.startTime
     endTimeInput.value = time.endTime

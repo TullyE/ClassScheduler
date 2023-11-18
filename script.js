@@ -19,11 +19,45 @@ if (storedPagesData) {
     }
 }
 
+function createPicklistOptions(selectElement, classTimes) {
+    const noTimeOptionSelected = document.createElement('option');
+    noTimeOptionSelected.value = 'None'; // Set the value attribute
+    noTimeOptionSelected.text = 'Please Select A Meeting Time'; // Set the text content   
+    selectElement.append(noTimeOptionSelected);
+    classTimes.forEach(time => {
+        const option = document.createElement('option')
+        option.value = 'None'
+        option.text = 'THESE►'
+        option.title = ""
+        selectElement.append(option)
+
+        time.forEach(t => {
+            let timeOption = document.createElement('option');
+            timeOption.value = "None";
+            option.title = option.title + t.days + " From " + t.startTime + " to " + t.endTime + "\n";
+
+            timeOption.text = t.days + " From " + t.startTime + " to " + t.endTime
+            timeOption.disabled = true;
+            timeOption.title = ''
+            timeOption.style.color = 'red';
+
+            // Add a class to the option element
+            timeOption.classList.add('custom-disabled-option');
+
+            selectElement.append(timeOption);
+        });
+
+    });
+
+}
+
 function createPageButton(pageData) {
     const newPage = createCustomClass(pageData.className, pageData.classTimes);
 
     const buttonContainer = document.createElement('div');
-    const pageSelect = document.createElement('select');
+    const timeSelect = document.createElement('select');
+
+    createPicklistOptions(timeSelect, pageData.classTimes)
 
     const addButton = document.createElement('button');
     addButton.textContent = newPage.className;
@@ -31,7 +65,7 @@ function createPageButton(pageData) {
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
 
-    buttonContainer.append(addButton, pageSelect, removeButton);
+    buttonContainer.append(addButton, timeSelect, removeButton);
     pageList.appendChild(buttonContainer);
 
     classData.push(newPage);
