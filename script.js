@@ -4,29 +4,6 @@ const pageList = document.getElementById("classList")
 
 let classData = []
 
-function updateClassSchedule() {
-    const classScheduleDiv = document.getElementById("classSchedule");
-    classScheduleDiv.innerHTML = ""; // Clear previous schedule
-
-    // Loop through the selected classes and display the schedule
-    for (let i = 0; i < classData.length; i++) {
-        const classInfo = classData[i];
-        const classSchedule = document.createElement("div");
-        classSchedule.innerHTML = `<h3>${classInfo.className} Schedule</h3>`;
-
-        if (classInfo.classTimes.length > 0) {
-            classInfo.classTimes.forEach((time, index) => {
-                classSchedule.innerHTML += `<p>${index + 1}. ${time.days} From ${time.startTime} to ${time.endTime}</p>`;
-            });
-        } else {
-            classSchedule.innerHTML += "<p>No scheduled times for this class.</p>";
-        }
-
-        classScheduleDiv.appendChild(classSchedule);
-    }
-}
-
-
 function createCustomClass(className, classTimes) {
     return {
         className: className || "New Class",
@@ -117,5 +94,3 @@ function createPageButton(pageData) {
 addClassButton.addEventListener('click', () => {
     createPageButton(createCustomClass())
 });
-
-updateClassSchedule()
