@@ -23,7 +23,7 @@ export function secondTimeAfterFirst(t1, t2) {
     return dateT1 < dateT2;
 }
 
-function convert12HourTo24Hour(time12h) {
+export function convert12HourTo24Hour(time12h) {
     // Extract hours, minutes, and AM/PM from the input string
     const [, hours, minutes, period] = time12h.match(/^(\d{1,2}):(\d{2}) ([APMapm]{2})$/);
 
@@ -41,3 +41,14 @@ function convert12HourTo24Hour(time12h) {
 
     return `${hoursString}:${minutesString}:00`;
 }
+
+export function minutesSinceMidnight(militaryTime) {
+    // Split the military time into hours and minutes
+    const [hours, minutes] = militaryTime.split(':').map(Number);
+
+    // Calculate the total minutes
+    const totalMinutes = hours * 60 + minutes;
+
+    return totalMinutes;
+}
+

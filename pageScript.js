@@ -37,9 +37,9 @@ function validateInputs(dayElement, startTimeElement, endTimeElement) {
     let startTimeIsValid = isValidTimeFormat(startTimeElement.value)
     let endTimeIsValid = isValidTimeFormat(endTimeElement.value)
 
-    dayElement.style.color = dayStringIsValid ? 'black' : 'red'
-    startTimeElement.style.color = startTimeIsValid ? 'black' : 'red'
-    endTimeElement.style.color = endTimeIsValid ? 'black' : 'red'
+    dayElement.style.color = dayStringIsValid ? 'white' : 'rgb(243, 102, 94)'
+    startTimeElement.style.color = startTimeIsValid ? 'white' : 'rgb(243, 102, 94)'
+    endTimeElement.style.color = endTimeIsValid ? 'white' : 'rgb(243, 102, 94)'
 
     if ((startTimeIsValid && endTimeIsValid) && !secondTimeAfterFirst(startTimeElement.value, endTimeElement.value)) {
         startTimeElement.style.color = 'red'
@@ -65,6 +65,7 @@ function addTime(time, divToAdd) {
     addButton.innerText = "Add Time"
     let removeButton = document.createElement('button')
     removeButton.innerText = "Remove Time"
+    removeButton.classList.add('remove-class-button')
     let duplicateButton = document.createElement("button")
     duplicateButton.innerText = "Duplicate"
 
@@ -107,7 +108,7 @@ function addTime(time, divToAdd) {
 
     duplicateButton.addEventListener('click', () => {
         let allMeetTimes = document.createElement('div')
-        allMeetTimes.classList.add("mystyle");
+        allMeetTimes.classList.add("classTimeGroup");
         let timeobj = createTime(time.days, time.startTime, time.endTime)
         addTime(timeobj, allMeetTimes)
         currPage.classTimes.push([timeobj])
@@ -136,7 +137,7 @@ function addTime(time, divToAdd) {
 
 newTimeButton.addEventListener("click", () => {
     let allMeetTimes = document.createElement('div')
-    allMeetTimes.classList.add("mystyle");
+    allMeetTimes.classList.add("classTimeGroup");
     let timeobj = createTime()
     addTime(timeobj, allMeetTimes)
     currPage.classTimes.push([timeobj])
@@ -146,7 +147,7 @@ newTimeButton.addEventListener("click", () => {
 
 currPage.classTimes.forEach(time => {
     let allMeetTimes = document.createElement('div')
-    allMeetTimes.classList.add("mystyle");
+    allMeetTimes.classList.add("classTimeGroup");
     time.forEach(t => {
         addTime(createTime(t.days, t.startTime, t.endTime, t.id), allMeetTimes)
     })
