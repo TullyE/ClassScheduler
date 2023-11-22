@@ -1,12 +1,11 @@
 import { convert12HourTo24Hour, minutesSinceMidnight } from './parseTime.js'
 import { parseDays } from './parseDays.js'
+
+const storedPagesData = JSON.parse(localStorage.getItem('pages_data'));
 const addClassButton = document.getElementById("addClassButton")
-
 const pageList = document.getElementById("classList")
-
-const timeDiv = document.querySelector('.times');
-
-const dayTimeDivs = document.querySelectorAll('.classTimes')
+const timeDiv = document.querySelector('.time-labels');
+const dayTimeDivs = document.querySelectorAll('.weekday-column')
 
 const dayDict = {
     "Monday": 0,
@@ -19,76 +18,46 @@ const dayDict = {
 let classData = []
 
 function displayClassInCalander(week, time, className) {
-    let startTime = time.startTime
-    let endTime = time.endTime
-    let myClassDiv = document.createElement('div')
+    let classBlock = document.createElement('div')
+    classBlock.classList.add("class-block")
 
-    myClassDiv.style.setProperty('width', getComputedStyle(dayTimeDivs[dayDict[week]]).width)
-    let height = (parseFloat(getComputedStyle(timeDiv).height) / (14 * 60)) * (minutesSinceMidnight(convert12HourTo24Hour(endTime)) - minutesSinceMidnight(convert12HourTo24Hour(startTime)))
-    myClassDiv.style.setProperty('height', height + 'px')
+    classBlock.style.setProperty('width', getComputedStyle(dayTimeDivs[dayDict[week]]).width)
 
-    let classTitleElement = document.createElement('p')
+    let classBlockHeight = (35.7 / 60) * (minutesSinceMidnight(convert12HourTo24Hour(time.endTime)) - minutesSinceMidnight(convert12HourTo24Hour(time.startTime))) - 1
+    classBlock.style.setProperty('height', classBlockHeight + 'px')
 
+    let classNameLabelElement = document.createElement('p')
+    let timeBlockLabelElement = document.createElement('p')
 
-    let classNameElement = document.createElement('p')
-    classNameElement.textContent = className
-    let timeElement = document.createElement('p')
-    timeElement.textContent = startTime + '-' + endTime
-    timeElement.classList.add("timeBlockTime")
-    classTitleElement.append(classNameElement, timeElement)
+    classNameLabelElement.textContent = className
+    timeBlockLabelElement.textContent = time.startTime + '-' + time.endTime
+    timeBlockLabelElement.classList.add("class-time-label")
 
-    myClassDiv.style.borderStyle = 'solid'
-    myClassDiv.style.borderLeft = 'none'
-    myClassDiv.style.borderRight = 'none'
-    myClassDiv.style.borderColor = 'white'
-    myClassDiv.style.borderWidth = '1px'
+    classBlock.append(classNameLabelElement, timeBlockLabelElement)
 
+    let top = (minutesSinceMidnight(convert12HourTo24Hour(time.startTime)) - minutesSinceMidnight(convert12HourTo24Hour("8:00 AM"))) * (35.7 / 60) // I HAVE TO REDO THIS CALCULATION
+    classBlock.style.top = (top) + 'px'
 
-
-
-    classTitleElement.style.color = 'black'
-
-    myClassDiv.classList.add("classBlock")
-    myClassDiv.appendChild(classTitleElement)
-    let r = Math.floor(Math.random() * 255)
-    let g = Math.floor(Math.random() * 255)
-    let b = Math.floor(Math.random() * 255)
-    myClassDiv.style.backgroundColor = 'rgba(' + r + "," + g + "," + b + ",1)"
-    myClassDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.5)'
-
-    myClassDiv.style.position = 'absolute'
-
-    let top = (parseFloat(getComputedStyle(timeDiv).height) / (14 * 60)) * (minutesSinceMidnight(convert12HourTo24Hour(startTime)) - 480)
-    myClassDiv.style.top = (top + 22) + 'px'
-
-    classTitleElement.style.opacity = '1'
-
-
-
-
-    dayTimeDivs[dayDict[week]].append(myClassDiv)
-    return myClassDiv
+    dayTimeDivs[dayDict[week]].append(classBlock)
+    classBlock.classList.add(time.id)
+    return classBlock
 }
 
 function createCustomClass(className, classTimes) {
     return {
         className: className || "New Class",
-        classTimes: classTimes || [],
+        selectedTime: "none",
+        color: "undefined",
+        classTimes: classTimes || []
     }
 }
 
-const storedPagesData = JSON.parse(localStorage.getItem('pages_data'));
-
-if (storedPagesData) {
-    for (let i = 0; i < storedPagesData.length; i++) {
-        createPageButton(storedPagesData[i]);
-    }
-}
-
-function createPicklistOptions(selectElement, classTimes, className) {
+function createPicklistOptions(selectElement, pageData, myPage) {
+    const classTimes = pageData.classTimes;
+    const className = pageData.className;
     const noTimeOptionSelected = document.createElement('option');
-    noTimeOptionSelected.value = 'None'; // Set the value attribute
-    noTimeOptionSelected.text = 'Please Select A Meeting Time'; // Set the text content   
+    noTimeOptionSelected.value = 'None';
+    noTimeOptionSelected.text = 'Please Select A Meeting Time';
     selectElement.append(noTimeOptionSelected);
     classTimes.forEach(time => {
         const option = document.createElement('option')
@@ -105,10 +74,6 @@ function createPicklistOptions(selectElement, classTimes, className) {
             timeOption.text = t.days + " From " + t.startTime + " to " + t.endTime
             timeOption.disabled = true;
             timeOption.title = ''
-            timeOption.style.color = 'red'
-
-            // Add a class to the option element
-            timeOption.classList.add('custom-disabled-option');
 
             selectElement.append(timeOption);
         });
@@ -132,6 +97,17 @@ function createPicklistOptions(selectElement, classTimes, className) {
                 }
             });
         }
+        // console.log(classData[classData.indexOf(myPage)].selectedTime)
+
+        classData[classData.indexOf(myPage)].selectedTime = JSON.parse(selectElement.value)
+
+        // console.log(classData[classData.indexOf(myPage)].selectedTime)
+
+        // classData[classData.indexOf(myPage)]
+        pageData.selectedTime = selectedValue
+        localStorage.setItem('pages_data', JSON.stringify(classData));
+
+
     });
 }
 
@@ -141,7 +117,7 @@ function createPageButton(pageData) {
     const buttonContainer = document.createElement('div');
     const timeSelect = document.createElement('select');
 
-    createPicklistOptions(timeSelect, pageData.classTimes, pageData.className)
+    createPicklistOptions(timeSelect, pageData, newPage)
 
     const addButton = document.createElement('button');
     addButton.textContent = newPage.className;
@@ -162,7 +138,16 @@ function createPageButton(pageData) {
     });
 
     removeButton.addEventListener('click', () => {
+
+
         const pageIndexToRemove = classData.indexOf(newPage);
+
+        let elementsToRemove = document.querySelectorAll('.' + classData[pageIndexToRemove].selectedTime[0].id);
+
+        Array.from(elementsToRemove).forEach(function (element) {
+            element.parentNode.removeChild(element);
+        });
+
         pageList.removeChild(buttonContainer);
 
         if (pageIndexToRemove !== -1) {
@@ -173,6 +158,12 @@ function createPageButton(pageData) {
     });
 
     localStorage.setItem('pages_data', JSON.stringify(classData));
+}
+
+if (storedPagesData) {
+    for (let i = 0; i < storedPagesData.length; i++) {
+        createPageButton(storedPagesData[i]);
+    }
 }
 
 addClassButton.addEventListener('click', () => {

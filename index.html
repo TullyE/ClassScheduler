@@ -5,6 +5,7 @@
     <title>Class Scheduler</title>
     <script type="module" src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
 
 
 </head>
@@ -14,85 +15,172 @@
     <p>By Tully E</p>
 
     <button id="addClassButton">Add Class</button>
-    <div class='classList' id="classList"></div>
-    <div>
-        <div class="cal-div">
-            <div class="times">
-                <div class="time">
-                    <p>08:00 AM</p>
-                </div>
-                <div class="time">
-                    <p>09:00 AM</p>
-                </div>
-                <div class="time">
-                    <p>10:00 AM</p>
-                </div>
-                <div class="time">
-                    <p>11:00 AM</p>
-                </div>
-                <div class="time">
-                    <p>12:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>01:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>02:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>03:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>04:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>05:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>06:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>07:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>08:00 PM</p>
-                </div>
-                <div class="time">
-                    <p>09:00 PM</p>
-                </div>
-
-
+    <div class='class-list' id="classList"></div>
+    <div class="calander-div">
+        <div class="time-labels">
+            <div class="time-label">
+                <p>08:00 AM</p>
             </div>
-            <div class="weeks">
-                <div class="weekday">
-                    <div class='day'>
-                        Monday
-                    </div>
-                    <div class="classTimes"></div>
+            <div class="time-label">
+                <p>09:00 AM</p>
+            </div>
+            <div class="time-label">
+                <p>10:00 AM</p>
+            </div>
+            <div class="time-label">
+                <p>11:00 AM</p>
+            </div>
+            <div class="time-label">
+                <p>12:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>01:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>02:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>03:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>04:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>05:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>06:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>07:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>08:00 PM</p>
+            </div>
+            <div class="time-label">
+                <p>09:00 PM</p>
+            </div>
+
+
+        </div>
+        <div class="weeks">
+            <div class="weekday-column">
+                <div class='day-label'>
+                    Monday
                 </div>
-                <div class="weekday">
-                    <div class='day'>
-                        Tuesday
+                <div>
+                    <div class="grids">
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+
                     </div>
-                    <div class="classTimes"></div>
+                    <div class="classes"></div>
                 </div>
-                <div class="weekday">
-                    <div class='day'>
-                        Wednesday
-                    </div>
-                    <div class="classTimes"></div>
+            </div>
+            <div class="weekday-column">
+                <div class='day-label'>
+                    Tuesday
                 </div>
-                <div class="weekday">
-                    <div class='day'>
-                        Thursday
+                <div>
+                    <div class="grids">
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+
                     </div>
-                    <div class="classTimes"></div>
+                    <div class="classes"></div>
                 </div>
-                <div class="weekday">
-                    <div class='day'>
-                        Friday
+            </div>
+            <div class="weekday-column">
+                <div class='day-label'>
+                    Wednesday
+                </div>
+                <div>
+                    <div class="grids">
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+
                     </div>
-                    <div class="classTimes"></div>
+                    <div class="classes"></div>
+                </div>
+            </div>
+            <div class="weekday-column">
+                <div class='day-label'>
+                    Thursday
+                </div>
+                <div>
+                    <div class="grids">
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+
+                    </div>
+                    <div class="classes"></div>
+                </div>
+            </div>
+            <div class="weekday-column">
+                <div class='day-label'>
+                    Friday
+                </div>
+                <div class="display-classes">
+                    <div class="grids">
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                        <div class="gridlines"></div>
+                    </div>
+                    <div class="classes"></div>
                 </div>
             </div>
         </div>
