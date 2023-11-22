@@ -13,7 +13,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Optional: Center vertically in the viewport */
     flex-direction: column;
     background-color: rgb(29, 30, 42);
 }
@@ -43,75 +42,13 @@ select {
     width: 215px;
 }
 
-.time p {
-    padding: 0px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-
-}
-
-.classList {
-    margin-bottom: 45px;
-}
-
-
-
-.cal-div {
-    display: flex;
-    flex-direction: row;
-}
-
-.weeks {
-    display: flex;
-    flex-direction: row;
-    margin-left: 15px;
-    margin-top: -20px;
-}
-
-.weekday {
-    width: 135px;
-    border-style: solid;
-    border-width: 1px;
-    margin-right: 15px;
-    text-align: center;
-}
-
-.day {
-    margin-left: 30px;
-    margin-right: 30px;
-    position: relative;
-}
-
-.classTimes {
-    position: relative;
-}
-
-.classBlock {
-    position: relative;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.classBlock p {
-    color: rgb(28, 26, 39);
-}
-
-.timeBlockTime {
-    font-size: 11px;
-    color: rgb(28, 26, 39);
-
-}
-
 input,
-select,
 textarea {
     color: white;
     background-color: rgb(89, 90, 103);
     border-style: none;
-    padding-left: 15px;
-
+    padding: 5px 0px 5px 5px;
+    margin: 0px 5px 0px 5px
 }
 
 textarea:focus,
@@ -120,24 +57,4 @@ input:focus {
     background-color: rgb(106, 107, 118);
     border-style: none;
     outline: none;
-}
-
-.new-meeting-time-button {
-    width: 150px;
-}
-
-.home-button {
-    width: 150px;
-}
-
-.remove-class-button {
-    width: 150px;
-}
-
-.class-name-input {
-    margin-top: 50px;
-}
-
-.classTimeGroup {
-    margin: 30px;
 }
